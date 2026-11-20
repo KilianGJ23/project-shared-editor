@@ -8,3 +8,7 @@ bin/
 *.log
 .DS_Store
 Thumbs.db
+
+# Server runtime workspace
+server_workspace/
+*/server_workspace/
