@@ -15,7 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 public class MainEditorFrame extends JFrame implements IEditorView {
     private FileExplorerPanel fileExplorerPanel;
@@ -96,63 +95,58 @@ public class MainEditorFrame extends JFrame implements IEditorView {
 
     @Override
     public void showEditorWindow(String username, int colorId, boolean isAdmin) {
-        SwingUtilities.invokeLater(() -> {
-            String roleText = isAdmin ? "Administrador" : "Colaborador";
-            this.sessionColorBadge.setBackground(UserColorPalette.getAccentColor(colorId));
-            this.sessionUserLabel.setText("Usuario: " + username + "  |  Rol: " + roleText);
-            this.fileExplorerPanel.setAdminControlsEnabled(isAdmin);
-            setVisible(true);
-        });
+        String roleText = isAdmin ? "Administrador" : "Colaborador";
+        this.sessionColorBadge.setBackground(UserColorPalette.getAccentColor(colorId));
+        this.sessionUserLabel.setText("Usuario: " + username + "  |  Rol: " + roleText);
+        this.fileExplorerPanel.setAdminControlsEnabled(isAdmin);
+        setVisible(true);
     }
 
     @Override
     public void closeEditorWindow() {
-        SwingUtilities.invokeLater(() -> setVisible(false));
+        setVisible(false);
     }
 
     @Override
     public void updateConnectedUsers(List<String[]> usersData) {
-        SwingUtilities.invokeLater(() -> this.activeUsersPanel.refreshUsers(usersData));
+        this.activeUsersPanel.refreshUsers(usersData);
     }
 
     @Override
     public void updateFileList(List<String> fileNames) {
-        SwingUtilities.invokeLater(() -> this.fileExplorerPanel.updateFiles(fileNames));
+        this.fileExplorerPanel.updateFiles(fileNames);
     }
 
     @Override
     public void setAdminPermissions(boolean isAdmin) {
-        SwingUtilities.invokeLater(() -> {
-            this.fileExplorerPanel.setAdminControlsEnabled(isAdmin);
-            String currentText = this.sessionUserLabel.getText();
-            int separatorIndex = currentText.indexOf("|");
-            if (separatorIndex > 0) {
-                String prefix = currentText.substring(0, separatorIndex + 1);
-                String roleText = isAdmin ? "  Rol: Administrador" : "  Rol: Colaborador";
-                this.sessionUserLabel.setText(prefix + roleText);
-            }
-        });
+        this.fileExplorerPanel.setAdminControlsEnabled(isAdmin);
+        String currentText = this.sessionUserLabel.getText();
+        int separatorIndex = currentText.indexOf("|");
+        if (separatorIndex > 0) {
+            String prefix = currentText.substring(0, separatorIndex + 1);
+            String roleText = isAdmin ? "  Rol: Administrador" : "  Rol: Colaborador";
+            this.sessionUserLabel.setText(prefix + roleText);
+        }
     }
 
     @Override
     public void displayFileLines(String fileName, List<String[]> linesData, String localUsername) {
-        SwingUtilities.invokeLater(() -> this.codeEditorPanel.renderLines(fileName, linesData, localUsername));
+        this.codeEditorPanel.renderLines(fileName, linesData, localUsername);
     }
 
     @Override
     public void highlightLockedLine(int lineNumber, String ownerUsername, int colorId, boolean ownedByLocalUser) {
-        SwingUtilities.invokeLater(() ->
-                this.codeEditorPanel.markLineLocked(lineNumber, ownerUsername, colorId, ownedByLocalUser));
+        this.codeEditorPanel.markLineLocked(lineNumber, ownerUsername, colorId, ownedByLocalUser);
     }
 
     @Override
     public void clearLineLock(int lineNumber) {
-        SwingUtilities.invokeLater(() -> this.codeEditorPanel.clearLineHighlight(lineNumber));
+        this.codeEditorPanel.clearLineHighlight(lineNumber);
     }
 
     @Override
     public void updateLineContent(int lineNumber, String content) {
-        SwingUtilities.invokeLater(() -> this.codeEditorPanel.updateSingleLine(lineNumber, content));
+        this.codeEditorPanel.updateSingleLine(lineNumber, content);
     }
 
     @Override
@@ -162,12 +156,11 @@ public class MainEditorFrame extends JFrame implements IEditorView {
 
     @Override
     public void showStatusMessage(String message) {
-        SwingUtilities.invokeLater(() -> this.statusBarLabel.setText(message));
+        this.statusBarLabel.setText(message);
     }
 
     @Override
     public void showErrorDialog(String message) {
-        SwingUtilities.invokeLater(() ->
-                JOptionPane.showMessageDialog(this, message, "Aviso", JOptionPane.ERROR_MESSAGE));
+        JOptionPane.showMessageDialog(this, message, "Aviso", JOptionPane.ERROR_MESSAGE);
     }
 }
