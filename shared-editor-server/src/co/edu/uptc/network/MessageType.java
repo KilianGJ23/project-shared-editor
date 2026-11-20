@@ -1,0 +1,23 @@
+package co.edu.uptc.network;
+
+public enum MessageType {
+    REGISTER_REQUEST,
+    REGISTER_OK,
+    REGISTER_ERROR,
+    USER_LIST_UPDATE,
+    ROLE_UPDATED,
+    CREATE_FILE,
+    FILE_LIST_UPDATE,
+    SELECT_FILE,
+    FILE_CONTENT,
+    LOCK_LINE,
+    LINE_LOCKED,
+    LOCK_REJECTED,
+    EDIT_LINE,
+    INSERT_LINE,
+    DELETE_LINE,
+    UNLOCK_LINE,
+    LINE_UNLOCKED,
+    ERROR_MESSAGE,
+    DISCONNECT
+}
